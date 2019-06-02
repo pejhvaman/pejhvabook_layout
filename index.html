@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pejhvabook</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.flipTimer.js"></script>
+    <link href="css/flipTimer.css" rel="stylesheet">
+</head>
+<body style="margin: 0;background: #e3e3e3">
+<style>
+
+    @font-face {
+        font-family: 'sans';
+        src: url("font/IRANsansWeb.ttf") format('truetype'), url('font/IRANsansWeb.eot?#iefix') format('embedded-opentype');
+    }
+
+    div, a, p, span, ul, li {
+        text-align: right; /*usulan in karo nemikonan chon badan dardesar saz mishe*/
+        direction: rtl;
+    }
+
+    a {
+        text-decoration: unset;
+    }
+
+    .sans {
+        font-family: sans; /*andaze font bozorgtar az sans va tehran ast...*/
+    }
+
+    .fontssm {
+        font-size: 9pt
+    }
+
+    .fontsm {
+        font-size: 10pt
+    }
+
+    .fontmd {
+        font-size: 12pt
+    }
+
+    .fontlg {
+        font-size: 16pt
+    }
+
+    header {
+        width: 100%;
+        height: 80px;
+        margin: 0 auto;
+        background: white;
+    }
+
+    #header_top {
+        width: 100%;
+        float: left;
+        height: 100%;
+    }
+
+    #header_top_left {
+        float: left;
+        width: 450px;
+        height: 100%;
+    }
+
+    #header_top_right {
+        float: right;
+        width: 850px;
+        height: 100%;
+    }
+
+    #header_top_left .left {
+        float: left;
+        width: 190px;
+        height: 100%;
+    }
+
+    #header_top_left .left #shopbasket {
+        float: left;
+        width: 150px;
+        height: 41px;
+        border: 1px solid #67bfb0;
+        border-radius: 5px;
+        margin: 20px 0 0 32px;
+        cursor: pointer;
+    }
+
+    #header_top_left .right {
+        float: right;
+        width: 235px;
+        height: 100%;
+        position: relative;
+    }
+
+    #basket_icon {
+        display: block;
+        width: 32px;
+        height: 32px;
+        float: right;
+        background: url(images/shopping-cart.png) no-repeat center;
+        margin-right: 9px;
+        margin-top: 4px;
+    }
+
+    #basket_count {
+        display: block;
+        float: left;
+        margin-left: 8px;
+        margin-top: 6px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        color: white;
+        background: #67bfb0;
+        text-align: center;
+        line-height: 30px;
+    }
+
+    #basket_title {
+        color: #67bfb0;
+        font-size: 12pt;
+        float: right;
+        margin-right: 2px;
+        line-height: 41px;
+    }
+
+    #login, #register {
+        color: #6f6f6f;
+    }
+
+    #enter_site {
+        float: left;
+        width: 180px;
+        text-align: center;
+        height: 28px;
+        margin-top: 27px;
+        cursor: pointer;
+        border-left: 1px solid #000;
+    }
+
+    #open_login {
+        background: url(images/arrow-down-sign-to-navigate.png) no-repeat center;
+        display: block;
+        width: 16px;
+        height: 16px;
+        float: left;
+        margin-left: 29px;
+        margin-top: 7px;
+    }
+
+    #open_login_menu {
+        float: left;
+        width: 220px;
+        text-align: center;
+        height: 195px;
+        position: absolute;
+        background: white;
+        border-top: 4px solid #e54a86;
+        top: 60px;
+        left: 0;
+        z-index: 5;
+        border-radius: 4px;
+        box-shadow: 2px 2px 5px #cbcbcb;
+        display: none;
+    }
+
+    #open_login_menu::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 9px 12px 9px;
+        border-color: transparent transparent #e54a86 transparent;
+
+        position: relative;
+        top: -33px;
+        left: -72px;
+    }
+
+    .btn_main {
+        display: block;
+        width: 100px;
+        height: 42px;
+        border-radius: 6px;
+        background: #67bfb0;
+        text-align: center;
+        color: white;
+        font-family: sans;
+        font-size: 16pt;
+        cursor: pointer;
+    }
+
+    .font_gray {
+        color: #6f6f6f;
+    }
+
+    .font_blue {
+        color: #67bfb0;
+    }
+
+    #profile_icon {
+        display: block;
+        width: 32px;
+        height: 32px;
+        background: url(images/users.png) no-repeat center;
+        float: right;
+        margin-right: 20px;
+        margin-top: 20px;
+    }
+</style>
+<header>
+    <div id="header_top">
+        <div id="header_top_left">
+            <div class="left">
+                <span id="shopbasket">
+                    <span id="basket_icon"></span>
+                    <span id="basket_title" class="sans">سبد خرید</span>
+                    <span id="basket_count" class="sans">0</span>
+                </span>
+            </div>
+            <div class="right">
+                <div id="enter_site" onclick="openLoginMenu(this)">
+                    <span id="open_login"></span>
+                    <a id="login" class="sans">ورود</a>
+                    <span class="sans" style="color: #6f6f6f;font-size: 9pt">/</span>
+                    <a id="register" class="sans">ثبت نام</a>
+                </div>
+                <div id="open_login_menu">
+                    <span class="btn_main" style="margin: auto;width: 180px;line-height: 42px;">
+                        ورود به پژوابوک
+                    </span>
+                    <div style="width: 100%;margin-top: 15px;text-align: center;border-bottom: 1px solid #ebebeb;height: 42px;">
+                        <span class="sans font_gray fontmd">
+                        کاربر جدید هستید؟
+                        </span>
+                        <a href="/register" class="sans" style="color:#67bfb0 ;margin-right: 4px">
+                            ثبت نام
+                        </a>
+                    </div>
+                    <span id="profile_icon"></span>
+                    <a href="/login" class="sans font_gray fontlg"
+                       style="float: right;margin-right: 8px;margin-top: 23px;">پروفایل</a>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            #logo {
+                float: right;
+                height: 100%;
+                width: 100px;
+                margin: 0 -8px 0 50px;
+            }
+
+            #logo_span {
+                display: block;
+                background: url(images/757cda6d9ac2a7f0db09c41b83931b53.jpg) no-repeat center;
+                width: 180px;
+                height: 75px;
+            }
+
+            #search {
+                float: left;
+                height: 100%;
+                width: 590px;
+                position: relative;
+            }
+
+            #search_input {
+                width: 565px;
+                height: 42px;
+                float: left;
+                vertical-align: middle;
+                border: 1px solid #d5d5d5;
+                border-radius: 8px;
+                font-family: sans;
+                font-size: 12pt;
+                color: #969696;
+                padding: 0 8px;
+                margin-top: 17px;
+                background: #e8e8e8;
+            }
+
+            #search_icon_back {
+                display: block;
+                width: 60px;
+                height: 44px;
+                background: #e54a86;
+                position: absolute;
+                left: 0;
+                margin-top: 17px;
+                border-radius: 8px 0 0 8px;
+                cursor: pointer;
+            }
+
+            #search_icon {
+                display: block;
+                width: 32px;
+                height: 32px;
+                background: url(images/magnifying-glass.png) no-repeat center;
+                position: absolute;
+                top: 6px;
+                left: 14px;
+            }
+        </style>
+
+        <div id="header_top_right">
+            <div id="logo">
+                <span id="logo_span"></span>
+            </div>
+            <div id="search">
+                <input id="search_input" placeholder="نام کتاب، ناشر یا دسته ی مورد نظر خود را وارد کنید...">
+                <span id="search_icon_back">
+                    <span id="search_icon"></span>
+                </span>
+
+            </div>
+        </div>
+    </div>
+</header>
+<script>
+    function openLoginMenu(tag) {
+        var divTag = $(tag);
+        divTag.parents('#header_top').find('#open_login_menu').fadeToggle();
+    }
+</script>
+<style>
+    nav {
+        width: 100%;
+        height: 42px;
+        background: rgba(135, 42, 97, 0.75);
+        border-bottom: 4px solid rgba(135, 42, 97, 0.91); /*d7e2eb*/
+        font-family: sans;
+        z-index: 4;
+    }
+
+    ul {
+        margin: 0;
+    }
+
+    li {
+        list-style: none
+    }
+
+    #menu_level1 {
+        width: 1300px;
+        padding: 0;
+        margin: auto;
+        position: relative;
+    }
+
+    #menu_level1 > li {
+        float: right;
+        line-height: 42px;
+        width: 115px;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .border_transition {
+        position: absolute;
+        display: block;
+        margin: auto;
+        width: 10px;
+        height: 4px;
+        bottom: 0;
+
+    }
+
+    #menu_level1 > li.activeMenu {
+
+    }
+
+    /*#menu_level1 > li:hover {
+        border-bottom: 4px solid #874356;
+        box-shadow: 0 0 2px #874356;
+    }*/
+
+    .level2_content {
+        width: 1300px;
+        height: 400px;
+        background: white;
+        margin-top: 4px;
+        box-shadow: 2px 2px 5px #cbcbcb;
+        position: absolute;
+        right: 0;
+        display: none;
+        z-index: 4;
+    }
+
+    .level2_content div:last-child {
+        border-left: unset;
+    }
+
+    .sub_content {
+        width: 311px;
+        height: 100%;
+        /*border-left: 1px solid #ebebeb;*/
+        float: right;
+    }
+
+    .sub_content img {
+        width: 220px;
+        height: 293px;
+        float: right;
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        border-radius: 7px;
+        overflow: hidden;
+    }
+
+    .menu_level2 {
+        color: #6f6f6f;
+        padding: unset;
+        font-size: 11pt;
+    }
+
+    .menu_level2 li {
+        color: #6f6f6f;
+        padding-right: 20px;
+        height: 25px;
+    }
+
+    /*.menu_level2 li:first-child {
+        color: #67bfb0;
+        padding-right: 10px !important;
+    }*/
+</style>
+
+<nav>
+    <ul id="menu_level1">
+        <li data-time="1">
+            <a>
+                دسته بندی ها
+            </a>
+            <span class="border_transition"></span>
+            <div class="level2_content">
+                <div class="sub_content">
+                    <ul class="menu_level2">
+                        <li>فلسفی</li>
+                        <li>
+                            هنری
+                        </li>
+                        <li>
+                            تاریخی
+                        </li>
+                        <li>
+                            شعر
+                        </li>
+                        <li>
+                            نمایشنامه
+                        </li>
+                    </ul>
+                </div>
+                <div class="sub_content"></div>
+                <div class="sub_content"></div>
+                <div class="sub_content">
+                    <img src="images/d2f1cd5e9bafed5e0e8218b29841b01f.jpg">
+                </div>
+            </div>
+
+        </li>
+        <li data-time="2">
+            <a>
+                نویسندگان
+            </a>
+            <div class="level2_content">
+                <div class="sub_content">
+                    <ul class="menu_level2">
+                        <li>کافکا</li>
+                        <li>آلبر کامو</li>
+                        <li>ژان پل سارتر</li>
+                    </ul>
+                </div>
+                <div class="sub_content"></div>
+                <div class="sub_content"></div>
+                <div class="sub_content">
+                    <img src="images/0f70801c7c01b5a58a0537f4007a0666.jpg">
+                </div>
+            </div>
+        </li>
+    </ul>
+</nav>
+<script>
+    var timer = {};
+
+    $('#menu_level1 > li').hover(function () {
+        var tag = $(this);
+        var timerAttr = tag.attr('data-time');
+        clearTimeout(timer[timerAttr]);
+        timer[timerAttr] = setTimeout(function () {
+            tag.find('.level2_content').show();
+            tag.css('border-bottom', '4px solid #e54a86');
+            tag.css('box-shadow', '2px 2px 4px #581b40');
+        }, 400);
+    }, function () {
+        var tag = $(this);
+        var timerAttr = tag.attr('data-time');
+        clearTimeout(timer[timerAttr]);
+        timer[timerAttr] = setTimeout(function () {
+            tag.find('.level2_content').hide();
+            tag.css('border-bottom', 'unset');
+            tag.css('box-shadow', 'unset');
+        }, 400);
+
+    });
+</script>
+<style>
+    #main {
+        width: 1300px;
+        margin: 20px auto;
+    }
+
+    #main::after {
+        content: '';
+        clear: both;
+        display: block;
+    }
+
+    .content_left {
+        width: 1030px;
+        float: left;
+    }
+
+    #content_right {
+        width: 230px;
+        float: right;
+        position: relative;
+    }
+
+    #naghdbook {
+        width: 100%;
+        background: white;
+        float: right;
+        margin: 20px 0;
+        border-radius: 5px;
+    }
+
+    #naghdbook ul {
+        padding-right: 8px;
+        width: 96%;
+        float: right;
+        box-shadow: 2px 2px 5px #cbcbcb;
+    }
+
+    #naghdbook ul li {
+        width: 100%;
+        float: right;
+        margin: 15px 0;
+        cursor: pointer;
+    }
+
+    #naghdbook .pic_circle {
+        display: block;
+        width: 64px;
+        height: 64px;
+        float: right;
+        border-radius: 100%;
+        overflow: hidden;
+    }
+
+    #naghdbook .title {
+        float: right;
+        margin-right: 20px;
+        font-family: sans;
+        font-size: 10pt;
+        width: 132px;
+        margin-top: 15px;
+    }
+
+    .options_good {
+        padding: 0;
+        float: right;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .options_good li {
+        width: 100%;
+        float: right;
+        height: 308px;
+        margin-bottom: 10px;
+        box-shadow: 2px 2px 5px #cbcbcb;
+        overflow: hidden;
+    }
+
+    .options_good a {
+        float: right;
+        position: relative;
+    }
+
+    .options_good .option_img {
+        width: 230px;
+        height: 308px;
+        border-radius: 5px;
+    }
+
+    .options_good .option_title {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 50px;
+        font-family: sans;
+        font-size: 25pt;
+        color: #ff0042;
+        font-weight: bold;
+    }
+
+    .parde {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.3);
+        display: block;
+        width: 230px;
+        height: 308px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .parde {
+        transition: all 500ms ease;
+    }
+
+    .parde:hover {
+        background: rgba(0, 0, 0, 0);
+    }
+</style>
+<div id="main">
+    <div id="content_right">
+        <ul class="options_good">
+            <li>
+                <a>
+                    <span class="option_title">با طعم موسیقی</span>
+                    <img class="option_img" src="images/82d75b877d985e59cfcedbf6430b5da3.jpg">
+                    <span class="parde"></span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="option_title">طراحی جلد</span>
+                    <img class="option_img" src="images/cover.jpg">
+                    <span class="parde"></span>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <span class="option_title">کتابخانه ها</span>
+                    <img class="option_img" src="images/library.jpg">
+                    <span class="parde"></span>
+                </a>
+            </li>
+        </ul>
+
+        <div id="naghdbook">
+            <ul>
+                <li>
+                    <a class="pic_circle" style="background: url(images/sart1.jpg) no-repeat center;"></a>
+                    <span class="title font_gray">
+                        نقد و بررسی رمان تهوع از ژان پل سارتر
+                    </span>
+                </li>
+                <li>
+                    <a class="pic_circle" style="background: url(images/camu1.jpg) no-repeat center;"></a>
+                    <span class="title font_gray">
+                        نقد و بررسی رمان طاعون از آلبر کامو
+                    </span>
+                </li>
+                <li>
+                    <a class="pic_circle" style="background: url(images/markez1.jpg) no-repeat center;"></a>
+                    <span class="title font_gray">
+سخنان میلان کوندرا در مورد رمان صد سال تنهایی
+                    </span>
+                </li>
+                <li>
+                    <a class="pic_circle" style="background: url(images/ketab1.jpg) no-repeat center;"></a>
+                    <span class="title font_gray">
+صد کتابی که باید خواند...
+                    </span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <style>
+        .slider_1 {
+            width: 1030px;
+            height: 350px;
+            float: left;
+            border-radius: 5px;
+            overflow: hidden;
+            background: white;
+            position: relative;
+            box-shadow: 2px 2px 5px #cbcbcb;
+        }
+
+        .div_pic {
+            width: 100%;
+            height: 100%;
+            float: left;
+        }
+
+        .div_pic a {
+            display: none;
+            width: 100%;
+            height: 100%;
+            float: left;
+        }
+
+        .div_pic img {
+
+            max-width: 100%;
+            max-height: 100%;
+            float: left;
+        }
+
+        .next_btn, .prev_btn {
+            display: block;
+            width: 64px;
+            height: 64px;
+            position: absolute;
+            top: 150px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 3;
+        }
+
+        .next_btn {
+            right: 15px;
+            background: url(images/right-arrow.png) no-repeat center;
+        }
+
+        .prev_btn {
+            left: 15px;
+            background: url(images/left-arrow.png) no-repeat center;
+        }
+
+        .slider1_nav {
+            width: 1030px;
+            height: 50px;
+            background: rgba(91, 88, 92, 0.45);
+            float: left;
+            position: relative;
+            top: -50px;
+        }
+
+        .slider1_nav ul {
+            padding: 0;
+            height: 100%;
+        }
+
+        .slider1_nav ul li {
+            float: right;
+            width: 206px;
+            height: 100%;
+            font-family: sans;
+            font-size: 16pt;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .slider1_nav ul li.activeSlide {
+            border-top: 4px solid #e54a86;
+        }
+
+        .slider1_nav ul li.activeSlide::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 14px 20px 14px;
+            border-color: transparent transparent #e54a86 transparent;
+            position: absolute;
+            top: -20px;
+            right: 88px;
+        }
+
+    </style>
+    <div class="content_left">
+        <div class="slider_1">
+            <span class="next_btn"></span>
+            <span class="prev_btn"></span>
+            <div class="div_pic">
+                <a class="slider1_item">
+                    <img src="images/slider1n1.jpg">
+                </a>
+                <a class="slider1_item">
+                    <img src="images/slider1n2.jpg">
+                </a>
+                <a class="slider1_item">
+                    <img src="images/slider1n3.jpg">
+                </a>
+                <a class="slider1_item">
+                    <img src="images/slider1n4.jpg">
+                </a>
+                <a class="slider1_item">
+                    <img src="images/slider1n5.jpg">
+                </a>
+            </div>
+            <div class="slider1_nav">
+                <ul>
+                    <li>
+                        <a>
+                            بیگانه
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            طاعون
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            افسانه سیزیف
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            انسان طاغی
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            سقوط
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+
+            var slider1tag = $('.slider_1');
+            var slider1item = slider1tag.find('.slider1_item');
+            var slider1Num = slider1item.length;
+            var nextslide1 = 1;
+            var slider1nav = slider1tag.find('.slider1_nav ul li');
+            var timeOut1 = 4000;
+
+
+            function slider1() {
+
+                if (nextslide1 > slider1Num) {
+                    nextslide1 = 1;
+                }
+                if (nextslide1 < 1) {
+                    nextslide1 = slider1Num;
+                }
+
+                slider1item.hide();
+                slider1item.eq(nextslide1 - 1).fadeIn(100);
+
+                slider1nav.removeClass('activeSlide');
+                slider1nav.eq(nextslide1 - 1).addClass('activeSlide');
+                nextslide1++;
+            }
+
+            slider1();
+
+            var stopslider1 = setInterval(slider1, timeOut1);
+            slider1tag.mouseleave(function () {
+                clearInterval(stopslider1);
+                stopslider1 = setInterval(slider1, timeOut1);
+            });
+
+            $('.prev_btn').click(function () {
+                clearInterval(stopslider1);
+                slider1();
+            });
+
+            $('.next_btn').click(function () {
+                clearInterval(stopslider1);
+                nextslide1 = nextslide1 - 2;     //chon dar click ruye <li> nextslide1+1 shode ast pas bayad 2 ta kam shavad baraye aghbgard.
+                slider1();
+            });
+
+            $('.slider_1 .slider1_nav li').click(function () {
+                clearInterval(stopslider1);
+                var index = $(this).index();
+                //index mesle eq az 0 shoro mishavad.
+                nextslide1 = index + 1;
+                slider1();
+            });
+
+
+        </script>
+
+        <style>
+            .slider2 {
+                width: 1030px;
+                height: 430px;
+                float: left;
+                border-radius: 5px;
+                overflow: hidden;
+                background: white;
+                margin: 15px 0;
+                font-family: sans;
+                color: #6f6f6f;
+                position: relative;
+                box-shadow: 2px 2px 5px #cbcbcb;
+            }
+
+            .flipTimer, .flipTimer div {
+                direction: ltr !important;
+            }
+
+            .flipTimer {
+                position: absolute;
+                transform: scale(0.3);
+                bottom: 15px;
+                right: -50px;
+            }
+
+            .finished {
+                width: 200px;
+                height: 90px;
+                border: 18px solid #cccccc;
+                border-radius: 40px;
+                position: absolute;
+                text-align: center;
+                line-height: 90px;
+                font-size: 30pt;
+                right: 320px;
+                top: 165px;
+                display: none;
+            }
+
+            .slider2_content {
+                float: right;
+                width: 830px;
+                height: 100%;
+            }
+
+            .slider2_item {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            .slider2_content_right {
+                float: right;
+                width: 415px;
+                height: 100%;
+            }
+
+            .slider2_content_left {
+                float: left;
+                width: 415px;
+                height: 100%;
+            }
+
+            .special_off {
+                color: #e54a86;
+                font-size: 14pt;
+                margin: 60px 0 0 0;
+                padding-right: 30px;
+            }
+
+            .item_price {
+                float: right;
+                margin-right: 15px;
+                width: 250px;
+                height: 33px;
+                border-radius: 24px;
+                overflow: hidden;
+                position: relative;
+            }
+
+            .old_price {
+                display: block;
+                height: 100%;
+                width: 96px;
+                background: #e54a86;
+                color: white;
+                text-align: center;
+                line-height: 33px;
+                float: right;
+            }
+
+            .old_price::before {
+                content: '';
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 9.5px 15px 9.5px 0;
+                border-color: transparent #e54a85 transparent transparent;
+                position: absolute;
+                right: 96px;
+                top: 8px;
+                z-index: 3;
+            }
+
+            .new_price {
+                display: block;
+                float: left;
+                height: 100%;
+                width: 150px;
+                background: #67bfb0;
+                text-align: center;
+                line-height: 33px;
+                color: white;
+            }
+
+            .new_price::before {
+                content: '';
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 9.5px 15px 9.5px 0;
+                border-color: transparent #ffffff transparent transparent;
+                position: absolute;
+                right: 100px;
+                top: 8px;
+            }
+
+            .item_price div {
+                width: 80px;
+                height: 2px;
+                background: #6f6f6f;
+                transform: rotate(-18deg);
+                position: absolute;
+                top: 15px;
+                right: 10px;
+            }
+
+            .descript {
+                float: right;
+                width: 100%;
+                margin: 30px 20px 0 0;
+            }
+
+            .descript p {
+                margin: 10px 0;
+            }
+
+            .item_title {
+                text-align: center;
+                font-size: 16pt;
+            }
+
+            .slider2_content_left img {
+                max-width: 230px;
+                max-height: 301px;
+                border-radius: 5px;
+                margin-right: 90px;
+            }
+        </style>
+        <div class="slider2">
+            <div class="flipTimer">
+                <div class="days"></div>
+                <div class="hours"></div>
+                <div class="minutes"></div>
+                <div class="seconds"></div>
+            </div>
+            <div class="finished">تمام شد!</div>
+
+            <div class="slider2_content">
+                <a class="slider2_item">
+                    <div class="slider2_content_right">
+                        <p class="special_off">
+                            تخفیف ویژه
+                        </p>
+                        <div class="item_price">
+                            <div></div>
+                            <span class="old_price">
+                            500
+                            </span>
+                            <span class="new_price">
+                                400
+                                هزار تومان
+                            </span>
+                        </div>
+                        <div class="descript">
+                            <p>
+                                نام نویسنده :
+                            </p>
+                            <p>
+                                نام ناشر :
+                            </p>
+                            <p>
+                                مترجم :
+                            </p>
+                            <p>
+                                توضیحاتی چند در مورد اثر :
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slider2_content_left">
+                        <p class="item_title">
+                            نام کتاب
+                        </p>
+                        <img src="images/taun1.jpg">
+                    </div>
+                </a>
+                <a class="slider2_item">
+                    <div class="slider2_content_right">
+                        <p class="special_off">
+                            تخفیف ویژه
+                        </p>
+                        <div class="item_price">
+                            <div></div>
+                            <span class="old_price">
+                            500
+                            </span>
+                            <span class="new_price">
+                                400
+                                هزار تومان
+                            </span>
+                        </div>
+                        <div class="descript">
+                            <p>
+                                نام نویسنده :
+                            </p>
+                            <p>
+                                نام ناشر :
+                            </p>
+                            <p>
+                                مترجم :
+                            </p>
+                            <p>
+                                توضیحاتی چند در مورد اثر :
+                            </p>
+                        </div>
+                    </div>
+                    <div class="slider2_content_left">
+                        <p class="item_title">
+                            نام کتاب
+                        </p>
+                        <img src="images/taun1.jpg">
+                    </div>
+                </a>
+            </div>
+            <style>
+                .slider2_nav {
+                    float: left;
+                    width: 200px;
+                    height: 100%;
+                }
+
+                .slider2_nav ul {
+                    padding: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .slider2_nav ul li {
+                    width: 100%;
+                    height: 43px;
+                    background: #f0f0f0;
+                    position: relative;
+                    cursor: pointer;
+                    color: #6f6f6f;
+                }
+
+                .slider2_nav ul li.activeSlide2 {
+                    background: #e54a85;
+                    color: white !important;
+                }
+
+                .slider2_nav ul li.activeSlide2::before {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 21px 0 21px 25px;
+                    border-color: transparent transparent transparent #e54a85;
+                    position: absolute;
+                    right: -25px;
+                }
+
+                .slider2_nav ul li a {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    line-height: 42px;
+                    text-align: center;
+                }
+
+            </style>
+            <div class="slider2_nav">
+                <ul>
+                    <li>
+                        <a>
+                            طاعون
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            افسانه سیزیف
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            پدرو پارامو
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            نام من سرخ
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            قمار باز
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            تهوع
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            بیگانه
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            جنایت و مکافات
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            صدسال تنهایی
+                        </a>
+                    </li>
+                    <li>
+                        <a>
+                            مزرعه حیوانات
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+
+            $('.flipTimer').flipTimer({
+                direction: 'down',
+                date: 'April 28,2019 22:31:00 ',
+                callback: function () {
+                    $('.slider2_content').css('opacity', 0.2);
+                    $('.finished').fadeIn(100);
+                }
+            });
+
+
+            var slider2tag = $('.slider2');
+            var slider2items = slider2tag.find('.slider2_item');
+            var numitems2 = slider2items.length;
+            var nextslide2 = 1;
+            var timeOut2 = 3000;
+            var slider2nav = slider2tag.find('.slider2_nav ul li');
+
+            function slider2() {
+                if (nextslide2 > numitems2) {
+                    nextslide2 = 1;
+                }
+                if (nextslide2 < 1) {
+                    nextslide2 = numitems2;
+                }
+
+                slider2items.hide();
+                slider2items.eq(nextslide2 - 1).fadeIn(100);
+                slider2nav.removeClass('activeSlide2');
+                slider2nav.eq(nextslide2 - 1).addClass('activeSlide2');
+                nextslide2++;
+            }
+
+            slider2();
+            var sliderstop2 = setInterval(slider2, timeOut2); /*setInterval is for repeat the order(s) & setTimeout is for intrupt in acting (an) orders.*/
+            slider2tag.mouseleave(function () {
+                clearInterval(sliderstop2);
+                sliderstop2 = setInterval(slider2, timeOut2);
+            });
+
+
+            $('.slider2 .slider2_nav ul li').click(function () {
+                clearInterval(sliderstop2);
+                var index2 = $(this).index();
+                gotoslide_2(index2);
+            });
+
+            function gotoslide_2(index2) {
+                nextslide2 = index2 + 1;
+                slider2();
+            }
+        </script>
+
+        <style>
+            .scroll_slider {
+                width: 100%;
+                float: left;
+                font-family: sans;
+                box-shadow: 2px 2px 5px #cbcbcb;
+            }
+
+            .scroll_slider .onvan {
+                width: 100%;
+                height: 51px;
+                float: right;
+                background-color: white;
+                border-radius: 5px 5px 0 0;
+            }
+
+            .scroll_slider h3 {
+                font-size: 14pt;
+                font-weight: normal;
+                float: right;
+                margin: 0;
+                color: #6f6f6f;
+                line-height: 50px;
+                width: 140px;
+                text-align: center;
+                border-bottom: 1px solid #6f6f6f;
+                margin-right: 20px;
+            }
+
+            .scroll_slider .badane {
+                width: 100%;
+                float: right;
+                height: 330px;
+                background: white;
+                border-radius: 0 0 5px 5px;
+            }
+
+            .badane .prevBtn_div {
+                width: 56px;
+                height: 100%;
+                float: right;
+                position: relative;
+            }
+
+            .badane .prevBtn_div .prevBtn_span {
+                display: block;
+                width: 32px;
+                height: 32px;
+                position: absolute;
+                top: 149px;
+                right: 12px;
+                cursor: pointer;
+                background: url(images/arrowright.png) no-repeat center;
+            }
+
+            .badane .nextBtn_div {
+                width: 56px;
+                height: 100%;
+                float: left;
+                position: relative;
+            }
+
+            .badane .nextBtn_div .nextBtn_span {
+                display: block;
+                width: 32px;
+                height: 32px;
+                position: absolute;
+                top: 149px;
+                left: 12px;
+                cursor: pointer;
+                background: url(images/arrowleft.png) no-repeat center;
+            }
+
+            .scroll_slider .scroll_item {
+                width: 918px;
+                height: 100%;
+                float: right;
+                overflow: hidden;
+            }
+
+            .scroll_item ul {
+                padding: 0;
+                width: 920px;
+                height: 100%;
+                float: right;
+            }
+
+            .scroll_item ul li {
+                height: 100%;
+                float: right;
+                width: 230px;
+            }
+
+            .scroll_item ul li a {
+                width: 100%;
+                height: 100%;
+                display: block;
+                float: right;
+                text-align: center;
+            }
+
+            .scroll_item img {
+                height: 200px;
+                width: 150px;
+                margin: 20px 0 15px 0;
+                border-radius: 4px;
+            }
+
+            .scroll_item p {
+                text-align: center;
+                margin: 0;
+                color: #6f6f6f;
+                font-size: 10.5pt;
+            }
+
+        </style>
+        <div class="scroll_slider">
+            <div class="onvan">
+                <h3>
+                    عنوان اسلایدر
+                </h3>
+            </div>
+            <div class="badane">
+                <div class="prevBtn_div">
+                    <span class="prevBtn_span" onclick="scrollSlider('previous',this)"></span>
+                </div>
+                <div class="scroll_item">
+                    <ul>
+                        <li>
+                            <a>
+                                <img src="images/taun1.jpg">
+                                <p>
+                                    نام کتاب
+                                </p>
+                                <p>
+                                    قیمت
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a>
+                                <img src="images/taun1.jpg">
+                                <p>
+                                    نام کتاب
+                                </p>
+                                <p>
+                                    قیمت
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a>
+                                <img src="images/taun1.jpg">
+                                <p>
+                                    نام کتاب
+                                </p>
+                                <p>
+                                    قیمت
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a>
+                                <img src="images/taun1.jpg">
+                                <p>
+                                    نام کتاب
+                                </p>
+                                <p>
+                                    قیمت
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a>
+                                <img src="images/taun1.jpg">
+                                <p>
+                                    نام کتاب
+                                </p>
+                                <p>
+                                    قیمت
+                                </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="nextBtn_div">
+                    <span class="nextBtn_span" onclick="scrollSlider('next',this)"></span>
+                </div>
+            </div>
+        </div>
+        <script>
+            function scrollSlider(direction, tag) {
+
+                var span_tag = $(tag);
+
+                var scrollSliderTag = span_tag.parents('.scroll_slider');
+                var scrollSliderUL = scrollSliderTag.find('.scroll_item ul');
+                var scrollSliderLI = scrollSliderUL.find('li');
+                var scrollSliderItemNum = scrollSliderLI.length;
+
+                var maxNegMargin = -(scrollSliderItemNum - 4) * 230;
+
+                scrollSliderUL.css('width', scrollSliderItemNum * 230);
+
+
+                var marginRightNew;
+                var marginRightOld = scrollSliderUL.css('margin-right'); //tule ul ra mesle navar kesh midahad.
+
+                marginRightOld = parseFloat(marginRightOld);   //marginRightOld be in surat ast: --px ke bakhsh adadi mad nazar ast.
+
+                if (direction == 'next') {
+                    marginRightNew = marginRightOld - 230;
+                }
+                if (direction == 'previous') {
+                    marginRightNew = marginRightOld + 230;
+                }
+
+                if (marginRightNew < maxNegMargin) {
+                    marginRightNew = 0;
+                }
+                if (marginRightNew > 0) {
+                    marginRightNew = maxNegMargin;
+                }
+
+                scrollSliderUL.animate({'marginRight': marginRightNew}, 700);
+
+            }
+
+        </script>
+
+    </div>
+</div>
+<style>
+    footer {
+        width: 100%;
+        height: 253px;
+        float: right;
+        font-family: sans;
+        background: #eceff1;
+        margin-top: 20px;
+    }
+
+    .footer_h {
+        width: 100%;
+        height: 52px;
+        float: right;
+        background: #eceff1;
+        border-top: 1px solid #d7dadc;
+    }
+
+    .footer_h .email, .footer_h .tel {
+        float: right;
+        font-size: 12pt;
+        color: #6f6f6f;
+        margin-left: 15px;
+        line-height: 52px;
+    }
+
+    .footer_h p {
+        margin: 0;
+        float: right;
+        color: #6f6f6f;
+        font-size: 12pt;
+        margin-left: 40px;
+        line-height: 52px;
+    }
+
+    .footer_h div {
+        width: 1300px;
+        height: 100%;
+        margin: auto;
+        border-bottom: 1px solid #d7dadc;
+
+    }
+
+    .footer_c {
+        width: 1300px;
+        height: 200px;
+        margin: auto;
+        margin-top: 53px;
+        color: #6f6f6f;
+    }
+
+    .footer_c::before {
+        content: '';
+        clear: both;
+        display: block;
+    }
+
+    .footer_cr {
+        width: 680px;
+        height: 100%;
+        float: right;
+    }
+
+    .footer_c ul {
+        width: 300px;
+        height: 150px;
+        float: right;
+        padding: 0;
+        margin-top: 40px;
+        margin-right: 40px;
+    }
+
+    .footer_c ul li {
+        width: 100%;
+        height: 30px;
+        font-size: 11pt;
+        margin-right: 20px;
+    }
+
+    .footer_c ul li:first-child {
+        font-size: 13pt;
+        color: #575757;
+    }
+
+</style>
+<footer>
+    <div class="footer_h">
+        <div>
+        <span class="email" style="padding-right: 20px">
+            آدرس ایمیل :
+        </span>
+            <p>
+                pejhman@pejhva.com
+            </p>
+            <span class="tel">
+            شماره تماس :
+        </span>
+            <p>
+                068978552255
+            </p>
+            <p style="float: left">
+                7 روز هفته، 24 ساعته در خدمت شما هستیم.
+            </p>
+        </div>
+
+    </div>
+    <div class="footer_c">
+        <div class="footer_cr">
+            <ul>
+                <li>
+                    <a>
+                        راهنمای خرید از سایت
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        نحوه ثبت سفارش
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        رویه ارسال سفارش
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        شیوه های پرداخت
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a>
+                        راهنمای پنل کاربری
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        درج نظرات
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        آپلود تصاویر
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        نکات امنیتی
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <style>
+            .footer_cl {
+                float: left;
+                height: 100%;
+                width: 600px;
+            }
+
+            .recieve_email {
+                width: 400px;
+                height: 100px;
+                float: left;
+                position: relative;
+            }
+
+            .recieve_email span {
+                display: block;
+                margin-top: 30px;
+
+            }
+
+            .recieve_email input {
+                float: right;
+                width: 330px;
+                height: 36px;
+                border: 1px solid #d5d5d5;
+                border-radius: 5px;
+                padding-right: 8px;
+
+            }
+
+            .recieve_email .sendBtn {
+                height: 39px;
+                width: 75px;
+                background: #67bfb0;
+                position: absolute;
+                left: 59px;
+                border-radius: 5px 0 0 5px;
+                line-height: 36px;
+                text-align: center;
+                color: white;
+                margin: 0;
+                cursor: pointer;
+                transition: background-color 300ms ease;
+            }
+
+            .sendBtn:hover {
+                background: #559d90;
+            }
+
+            .site_social {
+                width: 400px;
+                height: 100px;
+                float: left;
+                text-align: center;
+                position: relative;
+            }
+
+            .site_social i {
+                display: block;
+                width: 32px;
+                height: 32px;
+                margin-right: 10px;
+                margin-top: 37px;
+                float: left;
+                cursor: pointer;
+            }
+
+            .site_social i:first-child {
+                margin-left: 165px;
+            }
+        </style>
+        <div class="footer_cl">
+            <div class="recieve_email">
+                <span>
+                    برای اطلاع از خبرهای سایت ایمیل خود را وارد کنید :
+                </span>
+                <input>
+                <span class="sendBtn">
+                        ارسال
+                </span>
+            </div>
+            <div class="site_social">
+                <i class="instagram" style="background: url(images/instagram.png) no-repeat center"></i>
+                <i class="twitter" style="background: url(images/twitter.png) no-repeat center"></i>
+                <i class="telegram" style="background: url(images/telegram.png) no-repeat center"></i>
+            </div>
+        </div>
+    </div>
+
+</footer>
+</body>
+</html>

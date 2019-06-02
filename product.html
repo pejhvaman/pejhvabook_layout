@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pejhvabook</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.flipTimer.js"></script>
+    <link href="css/flipTimer.css" rel="stylesheet">
+</head>
+<body style="margin: 0;background: #f5f5f5">
+<style>
+
+    @font-face {
+        font-family: 'sans';
+        src: url("font/IRANsansWeb.ttf") format('truetype'), url('font/IRANsansWeb.eot?#iefix') format('embedded-opentype');
+    }
+
+    div, a, p, span, ul, li {
+        text-align: right;
+        direction: rtl;
+    }
+
+    a {
+        text-decoration: unset;
+    }
+
+    .sans {
+        font-family: sans; /*andaze font bozorgtar az sans va tehran ast...*/
+    }
+
+    ul {
+        padding: 0;
+    }
+
+    .sans {
+        font-family: sans;
+    }
+
+    .tehran {
+        font-family: sans;
+    }
+
+    .fontssm {
+        font-size: 9pt
+    }
+
+    .fontsm {
+        font-size: 10pt
+    }
+
+    .fontmd {
+        font-size: 12pt
+    }
+
+    .fontlg {
+        font-size: 16pt
+    }
+
+    header {
+        width: 100%;
+        height: 80px;
+        margin: 0 auto;
+        background: white;
+    }
+
+    #header_top {
+        width: 100%;
+        float: left;
+        height: 100%;
+    }
+
+    #header_top_left {
+        float: left;
+        width: 450px;
+        height: 100%;
+    }
+
+    #header_top_right {
+        float: right;
+        width: 850px;
+        height: 100%;
+    }
+
+    #header_top_left .left {
+        float: left;
+        width: 190px;
+        height: 100%;
+    }
+
+    #header_top_left .left #shopbasket {
+        float: left;
+        width: 150px;
+        height: 41px;
+        border: 1px solid #67bfb0;
+        border-radius: 5px;
+        margin: 20px 0 0 32px;
+        cursor: pointer;
+    }
+
+    #header_top_left .right {
+        float: right;
+        width: 235px;
+        height: 100%;
+        position: relative;
+    }
+
+    #basket_icon {
+        display: block;
+        width: 32px;
+        height: 32px;
+        float: right;
+        background: url(images/shopping-cart.png) no-repeat center;
+        margin-right: 9px;
+        margin-top: 4px;
+    }
+
+    #basket_count {
+        display: block;
+        float: left;
+        margin-left: 8px;
+        margin-top: 6px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        color: white;
+        background: #67bfb0;
+        text-align: center;
+        line-height: 30px;
+    }
+
+    #basket_title {
+        color: #67bfb0;
+        font-size: 12pt;
+        float: right;
+        margin-right: 2px;
+        line-height: 41px;
+    }
+
+    #login, #register {
+        color: #6f6f6f;
+    }
+
+    #enter_site {
+        float: left;
+        width: 180px;
+        text-align: center;
+        height: 28px;
+        margin-top: 27px;
+        cursor: pointer;
+        border-left: 1px solid #000;
+    }
+
+    #open_login {
+        background: url(images/arrow-down-sign-to-navigate.png) no-repeat center;
+        display: block;
+        width: 16px;
+        height: 16px;
+        float: left;
+        margin-left: 29px;
+        margin-top: 7px;
+    }
+
+    #open_login_menu {
+        float: left;
+        width: 220px;
+        text-align: center;
+        height: 195px;
+        position: absolute;
+        background: white;
+        border-top: 4px solid #e54a86;
+        top: 60px;
+        left: 0;
+        z-index: 5;
+        border-radius: 4px;
+        box-shadow: 2px 2px 5px #cbcbcb;
+        display: none;
+    }
+
+    #open_login_menu::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 9px 12px 9px;
+        border-color: transparent transparent #e54a86 transparent;
+
+        position: relative;
+        top: -33px;
+        left: -72px;
+    }
+
+    .btn_main {
+        display: block;
+        width: 100px;
+        height: 42px;
+        border-radius: 6px;
+        background: #67bfb0;
+        text-align: center;
+        color: white;
+        font-family: sans;
+        font-size: 16pt;
+        cursor: pointer;
+    }
+
+    .font_gray {
+        color: #6f6f6f;
+    }
+
+    .font_blue {
+        color: #67bfb0;
+    }
+
+    #profile_icon {
+        display: block;
+        width: 32px;
+        height: 32px;
+        background: url(images/users.png) no-repeat center;
+        float: right;
+        margin-right: 20px;
+        margin-top: 20px;
+    }
+</style>
+<header>
+    <div id="header_top">
+        <div id="header_top_left">
+            <div class="left">
+                <span id="shopbasket">
+                    <span id="basket_icon"></span>
+                    <span id="basket_title" class="sans">سبد خرید</span>
+                    <span id="basket_count" class="sans">0</span>
+                </span>
+            </div>
+            <div class="right">
+                <div id="enter_site" onclick="openLoginMenu(this)">
+                    <span id="open_login"></span>
+                    <a id="login" class="sans">ورود</a>
+                    <span class="sans" style="color: #6f6f6f;font-size: 9pt">/</span>
+                    <a id="register" class="sans">ثبت نام</a>
+                </div>
+                <div id="open_login_menu">
+                    <span class="btn_main" style="margin: auto;width: 180px;line-height: 42px;">
+                        ورود به پژوابوک
+                    </span>
+                    <div style="width: 100%;margin-top: 15px;text-align: center;border-bottom: 1px solid #ebebeb;height: 42px;">
+                        <span class="sans font_gray fontmd">
+                        کاربر جدید هستید؟
+                        </span>
+                        <a href="/register" class="sans" style="color:#67bfb0 ;margin-right: 4px">
+                            ثبت نام
+                        </a>
+                    </div>
+                    <span id="profile_icon"></span>
+                    <a href="/login" class="sans font_gray fontlg"
+                       style="float: right;margin-right: 8px;margin-top: 23px;">پروفایل</a>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            #logo {
+                float: right;
+                height: 100%;
+                width: 100px;
+                margin: 0 -8px 0 50px;
+            }
+
+            #logo_span {
+                display: block;
+                background: url(images/757cda6d9ac2a7f0db09c41b83931b53.jpg) no-repeat center;
+                width: 180px;
+                height: 75px;
+            }
+
+            #search {
+                float: left;
+                height: 100%;
+                width: 590px;
+                position: relative;
+            }
+
+            #search_input {
+                width: 565px;
+                height: 42px;
+                float: left;
+                vertical-align: middle;
+                border: 1px solid #d5d5d5;
+                border-radius: 8px;
+                font-family: sans;
+                font-size: 12pt;
+                color: #969696;
+                padding: 0 8px;
+                margin-top: 17px;
+                background: #e8e8e8;
+            }
+
+            #search_icon_back {
+                display: block;
+                width: 60px;
+                height: 44px;
+                background: #e54a86;
+                position: absolute;
+                left: 0;
+                margin-top: 17px;
+                border-radius: 8px 0 0 8px;
+                cursor: pointer;
+            }
+
+            #search_icon {
+                display: block;
+                width: 32px;
+                height: 32px;
+                background: url(images/magnifying-glass.png) no-repeat center;
+                position: absolute;
+                top: 6px;
+                left: 14px;
+            }
+        </style>
+
+        <div id="header_top_right">
+            <div id="logo">
+                <span id="logo_span"></span>
+            </div>
+            <div id="search">
+                <input id="search_input" placeholder="نام کتاب، ناشر یا دسته ی مورد نظر خود را وارد کنید...">
+                <span id="search_icon_back">
+                    <span id="search_icon"></span>
+                </span>
+
+            </div>
+        </div>
+    </div>
+</header>
+<script>
+    function openLoginMenu(tag) {
+        var divTag = $(tag);
+        divTag.parents('.right').find('#open_login_menu').fadeToggle();
+    }
+</script>
+<style>
+    nav {
+        width: 100%;
+        height: 42px;
+        background: rgba(135, 42, 97, 0.75);
+        border-bottom: 4px solid rgba(135, 42, 97, 0.91); /*d7e2eb*/
+        font-family: sans;
+        z-index: 4;
+    }
+
+    ul {
+        margin: 0;
+    }
+
+    li {
+        list-style: none
+    }
+
+    #menu_level1 {
+        width: 1300px;
+        padding: 0;
+        margin: auto;
+        position: relative;
+    }
+
+    #menu_level1 > li {
+        float: right;
+        line-height: 42px;
+        width: 115px;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .border_transition {
+        position: absolute;
+        display: block;
+        margin: auto;
+        width: 10px;
+        height: 4px;
+        bottom: 0;
+
+    }
+
+    #menu_level1 > li.activeMenu {
+
+    }
+
+    /*#menu_level1 > li:hover {
+        border-bottom: 4px solid #874356;
+        box-shadow: 0 0 2px #874356;
+    }*/
+
+    .level2_content {
+        width: 1300px;
+        height: 400px;
+        background: white;
+        margin-top: 4px;
+        box-shadow: 2px 2px 5px #cbcbcb;
+        position: absolute;
+        right: 0;
+        display: none;
+        z-index: 4;
+    }
+
+    .level2_content div:last-child {
+        border-left: unset;
+    }
+
+    .sub_content {
+        width: 311px;
+        height: 100%;
+        /*border-left: 1px solid #ebebeb;*/
+        float: right;
+    }
+
+    .sub_content img {
+        width: 220px;
+        height: 293px;
+        float: right;
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        border-radius: 7px;
+        overflow: hidden;
+    }
+
+    .menu_level2 {
+        color: #6f6f6f;
+        padding: unset;
+        font-size: 11pt;
+    }
+
+    .menu_level2 li {
+        color: #6f6f6f;
+        padding-right: 20px;
+        height: 25px;
+    }
+
+    /*.menu_level2 li:first-child {
+        color: #67bfb0;
+        padding-right: 10px !important;
+    }*/
+</style>
+
+<nav>
+    <ul id="menu_level1">
+        <li data-time="1">
+            <a>
+                دسته بندی ها
+            </a>
+            <span class="border_transition"></span>
+            <div class="level2_content">
+                <div class="sub_content">
+                    <ul class="menu_level2">
+                        <li>فلسفی</li>
+                        <li>
+                            هنری و عکاسی
+                        </li>
+                        <li>
+                            تاریخی
+                        </li>
+                        <li>
+                            شعر
+                        </li>
+                        <li>
+                            بیوگرافی
+                        </li>
+                        <li>
+                            کودکان
+                        </li>
+                        <li>
+                            علمی
+                        </li>
+                        <li>
+                            نمایشنامه
+                        </li>
+                    </ul>
+                </div>
+                <div class="sub_content"></div>
+                <div class="sub_content"></div>
+                <div class="sub_content">
+                    <img src="images/d2f1cd5e9bafed5e0e8218b29841b01f.jpg">
+                </div>
+            </div>
+
+        </li>
+        <li data-time="3">
+            <a>
+                نویسندگان
+            </a>
+            <div class="level2_content">
+                <div class="sub_content">
+                    <ul class="menu_level2">
+                        <li>کافکا</li>
+                        <li>آلبر کامو</li>
+                        <li>ژان پل سارتر</li>
+                    </ul>
+                </div>
+                <div class="sub_content"></div>
+                <div class="sub_content"></div>
+                <div class="sub_content">
+                    <img src="images/0f70801c7c01b5a58a0537f4007a0666.jpg">
+                </div>
+            </div>
+        </li>
+        <li>
+            <a>
+                اخیرا منتشر شده
+            </a>
+            <div class="level2_content">
+                <div class="sub_content">
+                    <ul class="menu_level2">
+                        <li>انتشارات نیلوفر</li>
+                        <li>انتشارات ماهی</li>
+                        <li>انتشارات چشمه</li>
+                    </ul>
+                </div>
+                <div class="sub_content"></div>
+                <div class="sub_content"></div>
+                <div class="sub_content">
+
+                </div>
+            </div>
+        </li>
+    </ul>
+</nav>
+<script>
+    var timer = {};
+
+    $('#menu_level1 > li').hover(function () {
+        var tag = $(this);
+        var timerAttr = tag.attr('data-time');
+        clearTimeout(timer[timerAttr]);
+        timer[timerAttr] = setTimeout(function () {
+            tag.find('.level2_content').show();
+            tag.css('border-bottom', '4px solid #e54a86');
+            tag.css('box-shadow', '0 0 2px #581b40');
+        }, 400);
+    }, function () {
+        var tag = $(this);
+        var timerAttr = tag.attr('data-time');
+        clearTimeout(timer[timerAttr]);
+        timer[timerAttr] = setTimeout(function () {
+            tag.find('.level2_content').hide();
+            tag.css('border-bottom', 'unset');
+            tag.css('box-shadow', 'unset');
+        }, 400);
+
+    });
+</script>
+<style>
+    #main {
+        width: 1300px;
+        margin: 20px auto;
+        font-family: sans;
+    }
+
+    #main::after {
+        content: '';
+        clear: both;
+        display: block;
+    }
+
+    #pics {
+        width: 570px;
+        float: right;
+        border-left: 1px solid #e9e9e9;
+        background: white;
+    }
+
+    #lovenshare {
+        width: 100%;
+        float: right;
+    }
+
+    #love {
+        display: block;
+        float: left;
+        margin: 20px;
+        width: 32px;
+        height: 32px;
+        background: url(images/nolove.png) no-repeat center;
+        cursor: pointer;
+    }
+
+    #share {
+        display: block;
+        float: left;
+        margin: 20px;
+        width: 32px;
+        height: 32px;
+        background: url(images/share.png) no-repeat center;
+        cursor: pointer;
+    }
+
+    #big_pic {
+        width: 100%;
+        float: right;
+        text-align: center;
+    }
+
+    #big_pic img {
+        vertical-align: middle;
+        margin: 20px auto;
+        max-width: 250px;
+        max-height: 375px;
+        border-radius: 4px;
+    }
+
+    #entesharat {
+        width: 100%;
+        float: right;
+        text-align: center;
+        margin: 30px 0;
+    }
+
+    #entesharat ul {
+        width: 100%;
+        float: right;
+        text-align: center;
+    }
+
+    #entesharat ul li {
+        float: right;
+        width: 120px;
+        height: 170px;
+        border: 1px solid #e9e9e9;
+        border-radius: 10px;
+        margin: 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    #entesharat img {
+        margin-top: 10px;
+        max-width: 100px;
+        max-height: 150px;
+        border-radius: 4px;
+    }
+
+    .activeEnteshar {
+        border: 1px solid #e54a86 !important;
+    }
+
+    .loved {
+        background: url(images/love.png) no-repeat center !important;
+    }
+
+    #entesharat p {
+        font-size: 13pt;
+        color: #6f6f6f;
+        margin: 0 10px;
+    }
+
+    #just_book {
+        width: 100%;
+        float: right;
+        border: 1px solid #dcdcdc;
+        box-shadow: 2px 2px 5px #cbcbcb;
+    }
+</style>
+<div id="main">
+    <div id="just_book">
+        <div id="pics">
+            <div id="lovenshare">
+                <span id="love"></span>
+                <span id="share"></span>
+            </div>
+            <div id="big_pic">
+                <img src="images/books/1/large/entesharat/1/stranger1.jpg">
+            </div>
+            <div id="entesharat">
+                <p>
+                    ناشر های این کتاب :
+                </p>
+                <ul>
+                    <li data-pic="1" class="activeEnteshar">
+                        <img src="images/books/1/small/entesharat/1/stranger1.jpg">
+                    </li>
+                    <li data-pic="2">
+                        <img src="images/books/1/small/entesharat/2/stranger2.jpg">
+                    </li>
+                    <li data-pic="3">
+                        <img src="images/books/1/small/entesharat/3/stranger3.jpg">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+            $('#love').click(function () {
+                if ($(this).hasClass('loved')) {
+                    $(this).removeClass('loved');
+                } else {
+                    $(this).addClass('loved');
+                }
+
+            });
+
+
+            $('#entesharat ul li').click(function () {
+                $('#entesharat li').removeClass('activeEnteshar');
+                $(this).addClass('activeEnteshar');
+                var picNum = $(this).attr('data-pic');
+                var picUrl = 'images/books/1/large/entesharat/' + picNum + '/stranger' + picNum + '.jpg'; //badan id ketab az tbl_books gerefte mishavad
+                $('#big_pic img').attr('src', picUrl);
+            });
+        </script>
+        <style>
+
+
+            #detail {
+                width: 679px;
+                float: left;
+                padding: 25px;
+                background: white;
+                height: 716px;
+            }
+
+            .row {
+                width: 100%;
+                float: right;
+                border-bottom: 1px solid #e9e9e9;
+            }
+
+            #bookanme {
+                display: inline-block;
+                margin: 0;
+                color: #6f6f6f;
+                font-size: 16pt;
+            }
+
+            #writername {
+                margin: 0 0 20px 0;
+                color: #919191;
+                font-size: 13pt;
+                display: inline-block;
+            }
+
+            .star_rating {
+                display: block;
+                float: left;
+                width: 120px;
+                height: 24px;
+                background: url(images/stargray.png) repeat;
+                margin-right: 20px;
+                position: relative;
+            }
+
+            .gray_star {
+                display: block;
+                float: left;
+                width: 100%;
+                height: 100%;
+                background: url(images/stargray.png) repeat;
+            }
+
+            .red_star {
+                display: block;
+                float: left;
+                width: 68%;
+                height: 100%;
+                background: url(images/starred.png) repeat;
+                position: absolute;
+                left: 0;
+            }
+
+            .choose_option {
+                width: 300px;
+                height: 48px;
+                border-radius: 8px;
+                border: 1px solid #e9e9e9;
+                margin-bottom: 50px;
+                background: #f9f9f9;
+                cursor: pointer;
+                position: relative;
+                text-align: center;
+            }
+
+            .choose_option::after {
+                content: '';
+                display: block;
+                width: 16px;
+                height: 16px;
+                background: url(images/correct-symbol.png) no-repeat center;
+                top: 15px;
+                right: 10px;
+                position: absolute;
+            }
+
+            .choose_option::before {
+                content: '';
+                display: block;
+                width: 16px;
+                height: 16px;
+                background: url(images/chevron-arrow-down.png) no-repeat center;
+                top: 18px;
+                left: 10px;
+                position: absolute;
+            }
+
+            .choose_option .option_selected {
+                color: #6f6f6f;
+                font-size: 12pt;
+                line-height: 48px;
+            }
+
+            .choose_option .nashers {
+                border-radius: 5px;
+                border: 1px solid #e9e9e9;
+                background: #f9f9f9;
+                margin-top: 4px;
+                display: none;
+                position: relative; /* remember this trick!:position relative + z-index */
+                z-index: 4;
+            }
+
+            .choose_option .nashers li {
+                padding-right: 10px;
+                color: #6f6f6f;
+                font-size: 11pt;
+                cursor: pointer;
+            }
+
+            .item_price {
+                float: right;
+                width: 250px;
+                height: 33px;
+                border-radius: 24px;
+                overflow: hidden;
+                position: relative;
+                margin: 10px 0 0 0;
+            }
+
+            .old_price {
+                display: block;
+                height: 100%;
+                width: 98px;
+                background: #e54a86;
+                color: white;
+                text-align: center;
+                line-height: 33px;
+                float: right;
+            }
+
+            .old_price::before {
+                content: '';
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 9.5px 15px 9.5px 0;
+                border-color: transparent #e54a85 transparent transparent;
+                position: absolute;
+                right: 96px;
+                top: 8px;
+                z-index: 3;
+            }
+
+            .new_price {
+                display: block;
+                float: left;
+                height: 100%;
+                width: 150px;
+                background: #67bfb0;
+                text-align: center;
+                line-height: 33px;
+                color: white;
+            }
+
+            .new_price::before {
+                content: '';
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 9.5px 15px 9.5px 0;
+                border-color: transparent #ffffff transparent transparent;
+                position: absolute;
+                right: 100px;
+                top: 8px;
+            }
+
+            .item_price div {
+                width: 80px;
+                height: 2px;
+                background: #6f6f6f;
+                transform: rotate(-18deg);
+                position: absolute;
+                top: 15px;
+                right: 10px;
+            }
+
+            .discount {
+                width: 100%;
+                float: right;
+                margin: 50px 15px 20px 0;
+            }
+
+            .discount_amount {
+                width: 70px;
+                height: 36px;
+                border-radius: 24px 0 24px 24px;
+                background: #e54a86;
+
+                color: white;
+                font-size: 16pt;
+                text-align: center;
+            }
+
+            .btnMain {
+                display: block;
+                border-radius: 8px;
+                width: 323px;
+                height: 52px;
+                margin-right: 15px;
+                margin-bottom: 50px;
+                background: #67bfb0;
+                text-align: center;
+                color: white;
+                border: 1px solid #4d8f84;
+                line-height: 52px;
+                font-size: 16pt;
+                cursor: pointer;
+                transition: background-color 300ms ease-in;
+                float: right;
+            }
+
+            .btnMain:hover {
+                background-color: #4d8f84;
+            }
+
+            #detail .row:last-child {
+                border-bottom: unset;
+            }
+        </style>
+        <div id="detail">
+            <div class="row">
+            <span class="star_rating">
+                <span class="gray_star"></span>
+                <span class="red_star"></span>
+            </span>
+                <p id="bookanme">نام کتاب</p>
+                <br>
+                <p id="writername">نام نویسنده</p>
+
+            </div>
+            <div class="row">
+                <p style="color: #6f6f6f;margin-bottom: 0;margin-top: 50px">
+                    انتخاب ناشر :
+                </p>
+                <div class="choose_option">
+                <span class="option_selected">
+                    ناشر 1
+                </span>
+                    <ul class="nashers">
+                        <li>
+                            ناشر 1
+                        </li>
+                        <li>
+                            ناشر 2
+                        </li>
+                        <li>
+                            ناشر 3
+                        </li>
+                        <li>
+                            ناشر 3
+                        </li>
+                        <li>
+                            ناشر 3
+                        </li>
+                        <li>
+                            ناشر 3
+                        </li>
+                        <li>
+                            ناشر 3
+                        </li>
+                        <li>
+                            ناشر 3
+                        </li>
+                        <li>
+                            ناشر 3
+                        </li>
+                        <li>
+                            ناشر 3
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="discount">
+                <span class="off_title" style="color: #6f6f6f">
+                    تخفیف
+                </span>
+                    <div class="discount_amount">
+                        15%
+                    </div>
+                    <div class="item_price">
+                        <div></div>
+                        <span class="old_price">
+                            500
+                    </span>
+                        <span class="new_price">
+                                400
+                                هزار تومان
+                    </span>
+                    </div>
+                </div>
+                <span class="btnMain">
+                اضافه کردن به سبد خرید
+            </span>
+            </div>
+        </div>
+        <script>
+            $('.choose_option').click(function () {
+                $(this).find('.nashers').slideToggle(100);
+            });
+
+            $('.nashers li').click(function () {
+                var textOpt = $(this).text();
+                $('.option_selected').text(textOpt);
+            });
+        </script>
+    </div>
+    <style>
+        #tab_part {
+            width: 100%;
+            float: right;
+        }
+
+        #tab_part ul {
+            width: 100%;
+            height: 50px;
+            float: right;
+            background: #f9f9f9;
+            border: 1px solid #dcdcdc;
+            border-right: unset;
+        }
+
+        #tab_part ul li {
+            float: right;
+            width: 150px;
+            height: 100%;
+            color: #6f6f6f;
+            text-align: center;
+            line-height: 50px;
+            font-size: 13pt;
+            border-left: 1px solid #dcdcdc;
+            cursor: pointer;
+        }
+
+        #tab_part ul li.activeTab {
+            box-shadow: 0 -4px 1px #67bfb0;
+            background: white;
+            height: 101% !important;
+        }
+
+        #tabs {
+            width: 100%;
+            float: right;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 2px 2px 5px #cbcbcb;
+        }
+    </style>
+    <div id="tabs">
+        <div id="tab_part">
+            <ul>
+                <li>
+                    مشخصات
+                </li>
+                <li>
+                    نظرات کاربران
+                </li>
+                <li>
+                    پرسش و پاسخ
+                </li>
+            </ul>
+        </div>
+        <style>
+            #tab_content {
+                width: 95%;
+                float: right;
+                background: white;
+                padding: 30px;
+            }
+
+            #property {
+                width: 100%;
+                float: right;
+            }
+
+            #border_stretch {
+                width: 100%;
+                float: left;
+            }
+
+            #border_stretch ul {
+                width: 100%;
+                float: right;
+                border-right: 2px solid #6f6f6f;
+            }
+
+            #border_stretch ul li {
+                width: 100%;
+                float: right;
+                color: #6f6f6f;
+                font-size: 12pt;
+                margin: 25px 0;
+            }
+
+            #border_stretch ul li:first-child {
+                margin-top: unset !important;
+            }
+
+            #border_stretch ul li:last-child {
+                margin-bottom: unset !important;
+            }
+
+            #border_stretch i {
+                display: block;
+                width: 32px;
+                height: 32px;
+                float: right;
+                position: relative;
+                right: -17px;
+                background: white url(images/addition-button.png) no-repeat center;
+                cursor: pointer;
+            }
+
+            .description {
+                width: 98%;
+                float: right;
+                font-size: 10.5pt;
+                padding: 15px;
+                margin-top: 40px;
+                display: none;
+            }
+
+            .less {
+                background: white url(images/minus-sign-in-filled-circle.png) no-repeat center !important;
+            }
+
+            #tab_content section {
+                display: none;
+            }
+        </style>
+        <div id="tab_content">
+            <section id="property">
+                <div id="border_stretch">
+                    <ul>
+                        <li>
+                            <i></i>
+                            خلاصه ای از کتاب
+                            <div class="description">
+                                تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از
+                                کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای
+                                از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه
+                                ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب
+                                تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از کتاب تکه ای از
+                                کتاب تکه ای از کتاب
+                            </div>
+                        </li>
+                        <li>
+                            <i></i>
+                            ناشر
+                            <div class="description">
+                                تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر
+                                تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر
+                                تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر
+                                تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر
+                                تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر
+                                تاشر تاشر تاشر تاشر تاشر تاشر تاشر تاشر
+                            </div>
+                        </li>
+                        <li>
+                            <i></i>
+                            طراحی جلد
+                        </li>
+                        <li>
+                            <i></i>
+                            زبان کتاب
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <style>
+                #nazar {
+                    width: 100%;
+                    float: right;
+                }
+
+                #add_comment {
+                    width: 100%;
+                    float: right;
+                    height: 80px;
+                    border-bottom: 1px solid #e9e9e9;
+
+                }
+
+                .addBtn {
+                    display: block;
+                    border-radius: 8px;
+                    width: 150px;
+                    height: 42px;
+                    background: #67bfb0;
+                    text-align: center;
+                    color: white;
+                    border: 1px solid #4d8f84;
+                    line-height: 42px;
+                    font-size: 12.5pt;
+                    cursor: pointer;
+                    transition: background-color 300ms ease-in;
+                    float: left;
+                }
+
+                .addBtn:hover {
+                    background-color: #4d8f84;
+                }
+
+                .all_comments {
+                    width: 1234px;
+                    float: right;
+                }
+
+                .comments {
+                    width: 100%;
+                    float: right;
+                    margin: 20px auto;
+                    height: 300px;
+                    border: 1px solid #f5f5f5;
+                    background: #fafafa;
+                    border-radius: 8px;
+                }
+
+                #add_comment h4 {
+                    color: #6f6f6f;
+                    font-weight: normal;
+                    font-size: 16pt;
+                    line-height: 75px;
+                }
+
+                .commenter {
+                    width: 95%;
+                    height: 70px;
+                    margin: auto;
+                    border-bottom: 1px solid #e9e9e9;
+                }
+
+                .by_who_when {
+                    color: #b6b6b6;
+                    line-height: 70px;
+                    font-size: 13.5pt;
+                }
+
+                .likeOrNot {
+                    width: 350px;
+                    height: 100%;
+                    float: left;
+                }
+
+                .like, .dislike {
+                    display: block;
+                    width: 70px;
+                    height: 36px;
+                    border-radius: 5px;
+                    border: 1px solid #e9e9e9;
+                    background: white;
+                    float: left;
+                    margin-right: 10px;
+                    margin-top: 17px;
+                }
+
+                .dislike_icon, .like_icon {
+                    display: block;
+                    width: 32px;
+                    height: 32px;
+                    float: right;
+                    margin-right: 2px;
+                    margin-top: 2px;
+                    cursor: pointer;
+                }
+
+                .dislike_icon {
+                    background: url(images/thumb-down.png) no-repeat center;
+                }
+
+                .like_icon {
+                    background: url(images/thumbs-up.png) no-repeat center;
+                }
+
+                .dislike_count, .like_count {
+                    display: block;
+                    width: 34px;
+                    text-align: center;
+                    float: left;
+                    color: #6f6f6f;
+                    line-height: 36px;
+
+                }
+
+                .do_you_likeOrNot {
+                    color: #6f6f6f;
+                    float: right;
+                    margin-top: 24px;
+                }
+
+                .comment_text {
+                    width: 92%;
+                    height: 190px;
+                    padding: 20px;
+                    margin: auto;
+                    color: #6f6f6f;
+                }
+
+            </style>
+            <section id="nazar">
+                <div id="add_comment">
+                    <span class="addBtn">
+                        نظر خود را بنویسید
+                    </span>
+
+                    <h4>
+                        نظرات کاربران
+                    </h4>
+                </div>
+                <div class="all_comments">
+                    <div class="comments">
+                        <div class="commenter">
+                        <span class="by_who_when">
+                            توسط
+                            پژمان یزدان خواه
+                            در تاریخ
+                            1397/7/1
+                        </span>
+                            <div class="likeOrNot">
+                            <span class="dislike">
+                                <span class="dislike_icon"></span>
+                                <span class="dislike_count">
+                                    8
+                                </span>
+                            </span>
+                                <span class="like">
+                                <span class="like_icon"></span>
+                                <span class="like_count">
+                                    20
+                                </span>
+                            </span>
+                                <span class="do_you_likeOrNot">
+                                آیا این نظر برایتان مفید بود؟
+                            </span>
+                            </div>
+                        </div>
+                        <div class="comment_text">
+                            <p>
+                                متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر
+                                متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر
+                                متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر
+                                متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر
+                                متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر متن نظر
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <style>
+                #question_ask {
+                    width: 100%;
+                    float: right;
+                }
+
+                #question_ask h4 {
+                    color: #6f6f6f;
+                    font-weight: normal;
+                }
+
+                #question_ask textarea {
+                    width: 100%;
+                    height: 200px;
+                    border-radius: 5px;
+                    border: 1px solid #e9e9e9;
+                }
+
+                #all_questions {
+                    width: 100%;
+                    float: right;
+                }
+
+                .question {
+                    width: 100%;
+                    height: 200px;
+                    float: right;
+                    border: 1px solid #f5f5f5;
+                    background: #fafafa;
+                    border-radius: 8px;
+                }
+
+                .asker {
+                    width: 95%;
+                    height: 70px;
+                    margin: auto;
+                    border-bottom: 1px solid #e9e9e9;
+                }
+
+                .ask_by {
+                    color: #b6b6b6;
+                    line-height: 70px;
+                    font-size: 13.5pt;
+                }
+
+                .the_question {
+                    padding: 40px;
+                    float: right;
+                    width: 1155px;
+                    height: 50px;
+                }
+
+                .ques_text {
+                    width: 100%;
+                    height: 100%;
+                    color: #6f6f6f;
+                }
+
+                #answer {
+                    width: 60%;
+                    height: 100px;
+                    float: left;
+                    background: #cffcf9;
+                    border-radius: 4px;
+                    margin-top: 30px;
+                    position: relative;
+                    padding: 24px;
+                }
+
+                #answer:after {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 0 20px 24px 20px;
+                    border-color: transparent transparent #cffcf9 transparent;
+                    position: absolute;
+                    top: 80px;
+                    left: -20px;
+                }
+            </style>
+            <section id="question_ask">
+                <h4>
+                    پرسش خود را مطرح کنید
+                </h4>
+                <textarea></textarea>
+                <span class="addBtn" style="margin: 30px 0">
+                    ثبت پرسش
+                </span>
+                <div id="all_questions">
+                    <div class="question">
+                        <div class="asker">
+                            <span class="ques_icno"></span>
+                            <span class="ask_by">
+                                   توسط
+                            پژمان یزدان خواه
+                            در تاریخ
+                            1397/7/1
+                            </span>
+                        </div>
+                        <div class="the_question">
+                            <span class="ques_text">
+                                متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال
+                            </span>
+                        </div>
+                    </div>
+                    <div id="answer">
+                             <span class="ques_text">
+                                 متن پاسخ متن پاسخ متن پاسخ متن پاسخ متن پاسخ متن پاسخ متن پاسخ
+                             </span>
+                    </div>
+                    <div class="question">
+                        <div class="asker">
+                            <span class="ques_icno"></span>
+                            <span class="ask_by">
+                                   توسط
+                            پژمان یزدان خواه
+                            در تاریخ
+                            1397/7/1
+                            </span>
+                        </div>
+                        <div class="the_question">
+                            <span class="ques_text">
+                                متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال متن سوال
+                            </span>
+                        </div>
+                    </div>
+                    <div id="answer">
+                             <span class="ques_text">
+                                 متن پاسخ متن پاسخ متن پاسخ متن پاسخ متن پاسخ متن پاسخ متن پاسخ
+                             </span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script>
+        $('#tab_content i').click(function () {
+            $(this).next().slideToggle();
+            $(this).toggleClass('less');
+        });
+        $('#tab_part li').click(function () {
+            $('#tab_part li').removeClass('activeTab');
+            $(this).addClass('activeTab');
+            $('#tabs section').fadeOut(0);
+            var tabNum = $(this).index();
+            $('#tabs section').eq(tabNum).fadeIn(200);
+        });
+    </script>
+</div>
+<style>
+    footer {
+        width: 100%;
+        height: 253px;
+        float: right;
+        font-family: sans;
+        background: #eceff1;
+        margin-top: 20px;
+    }
+
+    .footer_h {
+        width: 100%;
+        height: 52px;
+        float: right;
+        background: #eceff1;
+        border-top: 1px solid #d7dadc;
+    }
+
+    .footer_h .email, .footer_h .tel {
+        float: right;
+        font-size: 12pt;
+        color: #6f6f6f;
+        margin-left: 15px;
+        line-height: 52px;
+    }
+
+    .footer_h p {
+        margin: 0;
+        float: right;
+        color: #6f6f6f;
+        font-size: 12pt;
+        margin-left: 40px;
+        line-height: 52px;
+    }
+
+    .footer_h div {
+        width: 1300px;
+        height: 100%;
+        margin: auto;
+        border-bottom: 1px solid #d7dadc;
+
+    }
+
+    .footer_c {
+        width: 1300px;
+        height: 200px;
+        margin: auto;
+        margin-top: 53px;
+        color: #6f6f6f;
+    }
+
+    .footer_c::before {
+        content: '';
+        clear: both;
+        display: block;
+    }
+
+    .footer_cr {
+        width: 680px;
+        height: 100%;
+        float: right;
+    }
+
+    .footer_c ul {
+        width: 300px;
+        height: 150px;
+        float: right;
+        padding: 0;
+        margin-top: 40px;
+        margin-right: 40px;
+    }
+
+    .footer_c ul li {
+        width: 100%;
+        height: 30px;
+        font-size: 11pt;
+        margin-right: 20px;
+    }
+
+    .footer_c ul li:first-child {
+        font-size: 13pt;
+        color: #575757;
+    }
+
+</style>
+<footer>
+    <div class="footer_h">
+        <div>
+        <span class="email" style="padding-right: 20px">
+            آدرس ایمیل :
+        </span>
+            <p>
+                pejhman@pejhva.com
+            </p>
+            <span class="tel">
+            شماره تماس :
+        </span>
+            <p>
+                068978552255
+            </p>
+            <p style="float: left">
+                7 روز هفته، 24 ساعته در خدمت شما هستیم.
+            </p>
+        </div>
+
+    </div>
+    <div class="footer_c">
+        <div class="footer_cr">
+            <ul>
+                <li>
+                    <a>
+                        راهنمای خرید از سایت
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        نحوه ثبت سفارش
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        رویه ارسال سفارش
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        شیوه های پرداخت
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <a>
+                        راهنمای پنل کاربری
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        درج نظرات
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        آپلود تصاویر
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        نکات امنیتی
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <style>
+            .footer_cl {
+                float: left;
+                height: 100%;
+                width: 600px;
+            }
+
+            .recieve_email {
+                width: 400px;
+                height: 100px;
+                float: left;
+                position: relative;
+            }
+
+            .recieve_email span {
+                display: block;
+                margin-top: 30px;
+
+            }
+
+            .recieve_email input {
+                float: right;
+                width: 330px;
+                height: 36px;
+                border: 1px solid #d5d5d5;
+                border-radius: 5px;
+                padding-right: 8px;
+
+            }
+
+            .recieve_email .sendBtn {
+                height: 39px;
+                width: 75px;
+                background: #67bfb0;
+                position: absolute;
+                left: 59px;
+                border-radius: 5px 0 0 5px;
+                line-height: 36px;
+                text-align: center;
+                color: white;
+                margin: 0;
+                cursor: pointer;
+                transition: background-color 300ms ease;
+            }
+
+            .sendBtn:hover {
+                background: #559d90;
+            }
+
+            .site_social {
+                width: 400px;
+                height: 100px;
+                float: left;
+                text-align: center;
+                position: relative;
+            }
+
+            .site_social i {
+                display: block;
+                width: 32px;
+                height: 32px;
+                margin-right: 10px;
+                margin-top: 37px;
+                float: left;
+                cursor: pointer;
+            }
+
+            .site_social i:first-child {
+                margin-left: 165px;
+            }
+        </style>
+        <div class="footer_cl">
+            <div class="recieve_email">
+                <span>
+                    برای اطلاع از خبرهای سایت ایمیل خود را وارد کنید :
+                </span>
+                <input>
+                <span class="sendBtn">
+                        ارسال
+                </span>
+            </div>
+            <div class="site_social">
+                <i class="instagram" style="background: url(images/instagram.png) no-repeat center"></i>
+                <i class="twitter" style="background: url(images/twitter.png) no-repeat center"></i>
+                <i class="telegram" style="background: url(images/telegram.png) no-repeat center"></i>
+            </div>
+        </div>
+    </div>
+
+</footer>
+</body>
+</html>
